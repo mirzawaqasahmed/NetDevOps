@@ -2,17 +2,44 @@
     "variables": {
         "ssh_name": "foo",
         "ssh_pass": "bar",
-        "hostname": "NetDevOps"
+        "hostname": "FooBar"
     },
+    "provisioners": [{
+        "type":"shell",
+        "scripts":[
+            "scripts/vmwaretools.sh"
+        ],
+        "only":["vmware-iso"]
+    },{
+        "type": "shell",
+        "scripts": [
+            "scripts/zerodisk.sh",
+            "scripts/vagrant.sh"
+        ]
+    }],
     "builders": [{
         "type": "vmware-iso",
-        "guest_os_type": "ubuntu",
-        "ssh_username": "packer",
-        "ssh_wait_timeout": "360s",
-        "iso_url": "http://old-releases.ubuntu.com/releases/precise/ubuntu-12.04.2-server-amd64.iso",
-        "iso_checksum": "af5f788aee1b32c4b2634734309cc9e9",
+        "disk_size": 8096,
+        "http_directory":"../seed_files",
+        "guest_os_type": "ubuntu-64",
+        "skip_compaction":false,
+        "ssh_username": "vagrant",
+        "ssh_password": "vagrant",
+        "ssh_wait_timeout": "3600s",
+        "tools_upload_flavor":"linux",
+        "tools_upload_path":"/tmp/{{.Flavor}}.iso",
+        "iso_url": "../seed_files/ubuntu-14.04-server-amd64.iso",
+        "iso_checksum": "01545fa976c8367b4f0d59169ac4866c",
         "iso_checksum_type": "md5",
-        "shutdown_command": "shutdown -P now",
+        "shutdown_command": "sudo shutdown -P now",
+        "vmdk_name":"NetDevOps",
+        "vm_name":"NetDevOps",
+        "vmx_data":{
+            "memsize": "1024",
+            "numvcpus":"1",
+            "cpuid.coresPerSocket":"2"
+        },
+        "boot_wait":"4s",
         "boot_command":[
             "<esc><esc><enter><wait>",
             "/install/vmlinuz auto",
@@ -26,14 +53,19 @@
             " kbd-chooser/method=us",
             " keyboard-configuration/layout=USA",
             " keyboard-configuration/variant=USA",
-            " file=http://192.168.116.1:8080/ubuntu1404.seed",
-            " ks=http://192.168.116.1:8080/ubuntu1404.ks.cfg",
+            " file=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ubuntu1404.seed",
+            " ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ubuntu1404.ks.cfg",
             " locale=en_US",
-            " netcfg/get_domain=vm",
-            " netcfg/get_hostname=vagrant",
+            " netcfg/get_domain=netdevops.us",
+            " netcfg/get_hostname=NetDevOps",
             " noapic",
             "--",
             "<enter>"
         ]
+    }],
+    "post-processors": [{
+        "type": "vagrant",
+        "keep_input_artifact": true,
+        "output": "../vagrant_boxes/netdevops_{{.Provider}}.box"
     }]
 }
