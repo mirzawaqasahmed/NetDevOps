@@ -1,71 +1,110 @@
 {
-    "variables": {
-        "ssh_name": "foo",
-        "ssh_pass": "bar",
-        "hostname": "FooBar"
+  "variables": {
+    "ssh_name": "foo",
+    "ssh_pass": "bar",
+    "hostname": "NetDevOps",
+    "domain":"netdevops.us"
+  },
+  "builders": [{
+    "type": "vmware-iso",
+    "disk_size": 8096,
+    "http_directory":"../seed_files",
+    "guest_os_type": "ubuntu-64",
+    "skip_compaction":false,
+    "ssh_username": "vagrant",
+    "ssh_password": "vagrant",
+    "ssh_wait_timeout": "3600s",
+    "tools_upload_flavor":"linux",
+    "tools_upload_path":"/tmp/{{.Flavor}}.iso",
+    "iso_url": "../seed_files/ubuntu-14.04-server-amd64.iso",
+    "iso_checksum": "01545fa976c8367b4f0d59169ac4866c",
+    "iso_checksum_type": "md5",
+    "shutdown_command": "sudo shutdown -P now",
+    "vmdk_name":"NetDevOps",
+    "vm_name":"NetDevOps",
+    "vmx_data":{
+      "memsize": "2048",
+      "numvcpus":"1",
+      "cpuid.coresPerSocket":"2"
     },
-    "provisioners": [{
-        "type":"shell",
-        "scripts":[
-            "scripts/vmwaretools.sh"
-        ],
-        "only":["vmware-iso"]
+    "boot_wait":"4s",
+    "boot_command":[
+      "<esc><esc><enter><wait>",
+      "/install/vmlinuz auto",
+      " console-setup/ask_detect=false",
+      " console-setup/layoutcode=us",
+      " console-setup/modelcode=pc105",
+      " debconf/frontend=noninteractive",
+      " debian-installer=en_US",
+      " fb=false",
+      " initrd=/install/initrd.gz",
+      " kbd-chooser/method=us",
+      " keyboard-configuration/layout=USA",
+      " keyboard-configuration/variant=USA",
+      " file=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ubuntu1404.seed",
+      " ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ubuntu1404.ks.cfg",
+      " locale=en_US",
+      " netcfg/get_domain={{user `domain`}}",
+      " netcfg/get_hostname={{user `hostname`}}",
+      " noapic",
+      "--",
+      "<enter>"]
     },{
-        "type": "shell",
-        "scripts": [
-            "scripts/zerodisk.sh",
-            "scripts/vagrant.sh"
-        ]
-    }],
-    "builders": [{
-        "type": "vmware-iso",
-        "disk_size": 8096,
-        "http_directory":"../seed_files",
-        "guest_os_type": "ubuntu-64",
-        "skip_compaction":false,
-        "ssh_username": "vagrant",
-        "ssh_password": "vagrant",
-        "ssh_wait_timeout": "3600s",
-        "tools_upload_flavor":"linux",
-        "tools_upload_path":"/tmp/{{.Flavor}}.iso",
-        "iso_url": "../seed_files/ubuntu-14.04-server-amd64.iso",
-        "iso_checksum": "01545fa976c8367b4f0d59169ac4866c",
-        "iso_checksum_type": "md5",
-        "shutdown_command": "sudo shutdown -P now",
-        "vmdk_name":"NetDevOps",
-        "vm_name":"NetDevOps",
-        "vmx_data":{
-            "memsize": "1024",
-            "numvcpus":"1",
-            "cpuid.coresPerSocket":"2"
-        },
-        "boot_wait":"4s",
-        "boot_command":[
-            "<esc><esc><enter><wait>",
-            "/install/vmlinuz auto",
-            " console-setup/ask_detect=false",
-            " console-setup/layoutcode=us",
-            " console-setup/modelcode=pc105",
-            " debconf/frontend=noninteractive",
-            " debian-installer=en_US",
-            " fb=false",
-            " initrd=/install/initrd.gz",
-            " kbd-chooser/method=us",
-            " keyboard-configuration/layout=USA",
-            " keyboard-configuration/variant=USA",
-            " file=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ubuntu1404.seed",
-            " ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ubuntu1404.ks.cfg",
-            " locale=en_US",
-            " netcfg/get_domain=netdevops.us",
-            " netcfg/get_hostname=NetDevOps",
-            " noapic",
-            "--",
-            "<enter>"
-        ]
-    }],
-    "post-processors": [{
-        "type": "vagrant",
-        "keep_input_artifact": true,
-        "output": "../vagrant_boxes/netdevops_{{.Provider}}.box"
-    }]
+    "type": "virtualbox-iso",
+    "disk_size": 8096,
+    "http_directory":"../seed_files",
+    "guest_os_type": "Ubuntu_64",
+    "ssh_username": "vagrant",
+    "ssh_password": "vagrant",
+    "ssh_wait_timeout": "3600s",
+    "iso_url": "../seed_files/ubuntu-14.04-server-amd64.iso",
+    "iso_checksum": "01545fa976c8367b4f0d59169ac4866c",
+    "iso_checksum_type": "md5",
+    "shutdown_command": "sudo shutdown -P now",
+    "boot_wait":"4s",
+    "vboxmanage": [
+      ["modifyvm", "{{.Name}}", "--memory", "2048"],
+      ["modifyvm", "{{.Name}}", "--cpus", "2"]
+    ],
+    "vm_name": "{{user `hostname`}}",
+    "boot_command":[
+      "<esc><esc><enter><wait>",
+      "/install/vmlinuz auto",
+      " console-setup/ask_detect=false",
+      " console-setup/layoutcode=us",
+      " console-setup/modelcode=pc105",
+      " debconf/frontend=noninteractive",
+      " debian-installer=en_US",
+      " fb=false",
+      " initrd=/install/initrd.gz",
+      " kbd-chooser/method=us",
+      " keyboard-configuration/layout=USA",
+      " keyboard-configuration/variant=USA",
+      " file=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ubuntu1404.seed",
+      " ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ubuntu1404.ks.cfg",
+      " locale=en_US",
+      " netcfg/get_domain={{user `domain`}}",
+      " netcfg/get_hostname={{user `hostname`}}",
+      " noapic",
+      "--",
+      "<enter>"]
+  }],
+  "post-processors": [{
+      "type": "vagrant",
+      "keep_input_artifact": true,
+      "output": "../vagrant_boxes/netdevops_{{.Provider}}.box",
+      "only":["virtualbox-iso"]  
+  }],
+  "provisioners": [{
+    "type":"shell",
+    "scripts":[
+      "scripts/vmwaretools.sh"
+    ],
+    "only":["vmware-iso"]},{
+    "type": "shell",
+    "scripts": [
+      "scripts/zerodisk.sh",
+      "scripts/vagrant.sh"
+    ]
+  }]
 }

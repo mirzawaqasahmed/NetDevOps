@@ -1,3 +1,5 @@
 packer_cache
 *.iso
-vagrnat_boxes
+output-virtualbox-iso/*
+output-vmware-iso/*
+vagrant_boxes/*

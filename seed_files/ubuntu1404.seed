@@ -195,8 +195,7 @@ tasksel tasksel/first multiselect standard
 d-i pkgsel/install-recommends true
 
 # Individual additional packages to install
-d-i pkgsel/include string openssh-server
-d-i pkgsel/include string ubuntu-desktop
+d-i pkgsel/include string openssh-server ubuntu-desktop build-essential ansible chef puppet libvirt-bin virtualbox
 # Whether to upgrade packages after debootstrap.
 # Allowed values: none, safe-upgrade, full-upgrade
 d-i pkgsel/upgrade select full-upgrade
