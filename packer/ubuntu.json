@@ -54,7 +54,7 @@
     "disk_size": 8096,
     "http_directory":"../seed_files",
     "guest_os_type": "Ubuntu_64",
-    "ssh_username": "vagrant",
+     "ssh_username": "vagrant",
     "ssh_password": "vagrant",
     "ssh_wait_timeout": "3600s",
     "iso_url": "../seed_files/ubuntu-14.04-server-amd64.iso",
