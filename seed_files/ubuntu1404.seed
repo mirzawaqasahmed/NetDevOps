@@ -21,16 +21,16 @@ d-i hw-detect/load_firmware boolean true
 
 ### Mirror settings
 # If you select ftp, the mirror/country string does not need to be set.
-#d-i mirror/protocol string http
-#d-i mirror/country string us
-#d-i mirror/http/hostname string archive.ubuntu.com
-#d-i mirror/http/directory string /ubuntu
+d-i mirror/protocol string http
+d-i mirror/country string us
+d-i mirror/http/hostname string mirror.anl.gov
+d-i mirror/http/directory string /pub/ubuntu
 #d-i mirror/http/proxy string
 
 # Alternatively: by default, the installer uses CC.archive.ubuntu.com where
 # CC is the ISO-3166-2 code for the selected country. You can preseed this
 # so that it does so without asking.
-d-i mirror/http/mirror select CC.archive.ubuntu.com
+#d-i mirror/http/mirror select CC.archive.ubuntu.com
 
 # Suite to install.
 #d-i mirror/suite string squeeze
@@ -195,7 +195,7 @@ tasksel tasksel/first multiselect standard
 d-i pkgsel/install-recommends true
 
 # Individual additional packages to install
-d-i pkgsel/include string openssh-server ubuntu-desktop build-essential ansible chef puppet libvirt-bin virtualbox
+d-i pkgsel/include string libxml2 libxml2-dev libxslt1-dev python-pip golang ruby1.9.1-dev openssh-server ubuntu-desktop build-essential ansible chef puppet libvirt-bin virtualbox
 # Whether to upgrade packages after debootstrap.
 # Allowed values: none, safe-upgrade, full-upgrade
 d-i pkgsel/upgrade select full-upgrade
@@ -276,4 +276,4 @@ d-i finish-install/reboot_in_progress note
 # directly, or use the apt-install and in-target commands to easily install
 # packages and run commands in the target system.
 #d-i preseed/late_command string apt-install zsh; in-target chsh -s /bin/zsh
-d-i preseed/late_command string echo "vagrant ALL=(ALL) NOPASSWD:ALL" > /target/etc/sudoers.d/90-virttest-ubuntu
+d-i preseed/late_command string echo "vagrant ALL=(ALL) NOPASSWD:ALL" > /target/etc/sudoers.d/90-vagrant

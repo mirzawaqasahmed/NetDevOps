@@ -47,15 +47,17 @@
   }],
   "post-processors": [{
       "type": "vagrant",
-      "keep_input_artifact": true,
       "output": "../vagrant_boxes/netdevops_{{.Provider}}.box",
+      "vagrantfile_template":"./Vagrantfile",
       "only":["virtualbox-iso"]  
   }],
   "provisioners": [{
     "type": "shell",
     "scripts": [
-      "scripts/zerodisk.sh",
-      "scripts/vagrant.sh"
+      "scripts/vagrant.sh",
+      "scripts/install-virtualbox.sh",
+      "scripts/junostools.sh",
+      "scripts/cleanup.sh"
     ]
   }]
 }
