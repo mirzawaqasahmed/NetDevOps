@@ -60,4 +60,4 @@ sudo swapoff `cat /proc/swaps | tail -n1 | awk -F ' ' '{print $1}'`;
 sudo dd if=/dev/zero of=`cat /proc/swaps | tail -n1 | awk -F ' ' '{print $1}'`;
 sudo mkswap `cat /proc/swaps | tail -n1 | awk -F ' ' '{print $1}'`;
 sudo swapon `cat /proc/swaps | tail -n1 | awk -F ' ' '{print $1}'`;
-sudo rm Filename;
+sudo rm `cat /proc/swaps | tail -n1 | awk -F ' ' '{print $1}'`;
