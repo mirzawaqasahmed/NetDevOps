@@ -14,5 +14,5 @@ sudo apt-get update
 sudo apt-get install atom
 
 echo "Install Packer"
-wget https://dl.bintray.com/mitchellh/packer/0.6.0_linux_amd64.zip
-sudo unzip 0.6.0_linux_amd64.zip -d /usr/bin
+wget https://dl.bintray.com/mitchellh/packer/0.6.1_linux_amd64.zip
+sudo unzip 0.6.1_linux_amd64.zip -d /usr/bin

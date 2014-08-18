@@ -11,8 +11,6 @@ d-i keyboard-configuration/layoutcode string us
 # skip displaying a list if there is more than one interface.
 d-i netcfg/choose_interface select auto
 d-i netcfg/dhcp_timeout string 60
-#d-i netcfg/get_hostname string Testy
-#d-i netcfg/get_domain string testy.com
 
 # If non-free firmware is needed for the network or other hardware, you can
 # configure the installer to always try to load it, without prompting. Or
@@ -195,7 +193,7 @@ tasksel tasksel/first multiselect standard
 d-i pkgsel/install-recommends true
 
 # Individual additional packages to install
-d-i pkgsel/include string libxml2 libxml2-dev libxslt1-dev python-pip golang ruby1.9.1-dev openssh-server ubuntu-desktop build-essential ansible chef puppet libvirt-bin virtualbox
+d-i pkgsel/include string libxml2 libxml2-dev subversion cvs git tree libxslt1-dev python-pip golang ruby1.9.1-dev openssh-server ubuntu-desktop build-essential ansible chef puppet libvirt-bin virtualbox
 # Whether to upgrade packages after debootstrap.
 # Allowed values: none, safe-upgrade, full-upgrade
 d-i pkgsel/upgrade select full-upgrade
@@ -214,7 +212,7 @@ popularity-contest popularity-contest/participate boolean false
 # By default, the system's locate database will be updated after the
 # installer has finished installing most packages. This may take a while, so
 # if you don't want it, you can set this to "false" to turn it off.
-d-i pkgsel/updatedb boolean true
+d-i pkgsel/updatedb boolean false
 
 ### Boot loader installation
 # This is fairly safe to set, it makes grub install automatically to the MBR

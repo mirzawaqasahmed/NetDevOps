@@ -1,8 +1,6 @@
 #!/bin/bash -eux
 
-#yum erase -y fuse
-
-# Install VMWare Tools 
+# Install VMWare Tools
 echo "Installing VMWare Tools..."
 cd /tmp
 sudo mkdir -p /mnt/cdrom
