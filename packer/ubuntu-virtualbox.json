@@ -20,7 +20,8 @@
     "boot_wait":"4s",
     "vboxmanage": [
       ["modifyvm", "{{.Name}}", "--memory", "2048"],
-      ["modifyvm", "{{.Name}}", "--cpus", "2"]
+      ["modifyvm", "{{.Name}}", "--cpus", "2"],
+      ["modifyvm", "{{.Name}}", "--vram","32"]
     ],
     "vm_name": "{{user `hostname`}}",
     "boot_command":[
@@ -49,7 +50,7 @@
       "type": "vagrant",
       "output": "../vagrant_boxes/netdevops_{{.Provider}}.box",
       "vagrantfile_template":"./Vagrantfile",
-      "only":["virtualbox-iso"]  
+      "only":["virtualbox-iso"]
   }],
   "provisioners": [{
     "type": "shell",
