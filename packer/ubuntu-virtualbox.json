@@ -5,7 +5,7 @@
   },
   "builders": [{
     "type": "virtualbox-iso",
-    "disk_size": 8096,
+    "disk_size": 40960,
     "http_directory":"../seed_files",
     "guest_os_type": "Ubuntu_64",
      "ssh_username": "vagrant",
