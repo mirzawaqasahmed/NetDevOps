@@ -36,7 +36,6 @@
       " keyboard-configuration/layout=USA",
       " keyboard-configuration/variant=USA",
       " file=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ubuntu1404.seed",
-      " ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ubuntu1404.ks.cfg",
       " locale=en_US",
       " netcfg/get_domain={{user `domain`}}",
       " netcfg/get_hostname={{user `hostname`}}",
@@ -59,6 +58,9 @@
     "scripts": [
       "scripts/vagrant.sh",
       "scripts/junostools.sh",
+      "scripts/gvm.sh",
+      "scripts/docker.sh",
+      "scripts/dconf-custom.sh",
       "scripts/cleanup.sh"
     ]
   }]
