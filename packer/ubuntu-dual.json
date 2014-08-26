@@ -20,7 +20,9 @@
         "scripts": [
             "scripts/vagrant.sh",
             "scripts/junostools.sh",
-            "scripts/vmwaretools.sh",
+            "scripts/gvm.sh",
+            "scripts/docker.sh",
+            "scripts/dconf-custom.sh",
             "scripts/cleanup.sh"
         ]
     }],

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 ##
 # Purge unnecessary data from the image to keep it small.
@@ -8,8 +8,12 @@
 
 # Remove amazon lens
 echo "Removing non-required packages"
-sudo apt-get purge thunderbird libreoffice* rythmbox unity-webapps-common unity-lens-friends unity-lens-photos unity-lens-music unity-lens-video -y
+sudo apt-get purge thunderbird libreoffice* rythmbox unity-webapps-common unity-lens-friends unity-lens-photos unity-lens-music unity-lens-video -y;
 sudo apt-get autoremove -y
+
+echo "Upgrading any remaining software"
+sudo apt-get update
+sudo apt-get dist-upgrade -y
 
 # tidy up DCHP leases
 echo "Cleaning up dhcp..."
