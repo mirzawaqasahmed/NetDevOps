@@ -16,10 +16,14 @@
     "iso_checksum_type": "md5",
     "shutdown_command": "sudo shutdown -P now",
     "boot_wait":"4s",
+    "hard_drive_interface":"sata",
     "vboxmanage": [
       ["modifyvm", "{{.Name}}", "--memory", "2048"],
       ["modifyvm", "{{.Name}}", "--cpus", "2"],
       ["modifyvm", "{{.Name}}", "--vram","64"]
+    ],
+    "vboxmanage_post":[
+        ["modifyhd", "output-virtualbox-iso/{{.Name}}.vdi", "--compact"]
     ],
     "vm_name": "{{user `hostname`}}",
     "boot_command":[
@@ -36,6 +40,7 @@
       " keyboard-configuration/layout=USA",
       " keyboard-configuration/variant=USA",
       " file=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ubuntu1404.seed",
+      " ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ubuntu1404.ks.cfg",
       " locale=en_US",
       " netcfg/get_domain={{user `domain`}}",
       " netcfg/get_hostname={{user `hostname`}}",
