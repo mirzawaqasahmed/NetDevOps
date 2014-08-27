@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 ##
 # Purge unnecessary data from the image to keep it small.
@@ -6,15 +6,15 @@
 # Based on: https://gist.github.com/adrienbrault/3775253
 ##
 
-#Adding atom launcher to Vagrant users unity bar
-echo "Adding the atom editor to the main desktop bar"
-cp /usr/share/applications/atom.desktop /home/vagrant/.local/share/applications/
-
 # Remove amazon lens
 echo "Removing non-required packages"
 sudo apt-get purge thunderbird libreoffice* rythmbox unity-webapps-common unity-lens-friends unity-lens-photos unity-lens-music unity-lens-video -y
 sudo apt-get autoclean -y
 sudo apt-get autoremove -y
+
+echo "Upgrading any remaining software"
+sudo apt-get update
+sudo apt-get dist-upgrade -y
 
 # tidy up DCHP leases
 echo "Cleaning up dhcp..."

@@ -20,9 +20,9 @@ d-i hw-detect/load_firmware boolean true
 ### Mirror settings
 # If you select ftp, the mirror/country string does not need to be set.
 d-i mirror/protocol string http
-d-i mirror/country string us
-d-i mirror/http/hostname string mirror.anl.gov
-d-i mirror/http/directory string /pub/ubuntu
+#d-i mirror/country string us
+d-i mirror/http/hostname string 10.0.1.100
+d-i mirror/http/directory string /ubuntu
 #d-i mirror/http/proxy string
 
 # Alternatively: by default, the installer uses CC.archive.ubuntu.com where
