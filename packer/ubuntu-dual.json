@@ -118,6 +118,7 @@
       }],
     "post-processors": [{
         "type": "vagrant",
-        "output": "../vagrant_boxes/netdevops_{{.Provider}}.box"
+        "output": "../vagrant_boxes/netdevops_{{.Provider}}.box",
+        "vagrantfile_template":"./ubuntu-vagrant.template"
     }]
 }

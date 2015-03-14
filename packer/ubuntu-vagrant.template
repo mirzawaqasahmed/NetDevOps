@@ -1,0 +1,29 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.require_version ">= 1.6.2"
+
+Vagrant.configure("2") do |config|
+    config.vm.box = "juniper/netdevops"
+    config.vm.synced_folder ".", "/vagrant", disabled:true
+    config.vm.guest = :linux
+    config.vm.hostname = "NetDevOps"
+
+    config.vm.provider :virtualbox do |v, override|
+        #v.gui = true
+        v.customize ["modifyvm", :id, "--memory", 3072]
+        v.customize ["modifyvm", :id, "--cpus", 2]
+    end
+
+    config.vm.provider :vmware_fusion do |v, override|
+        v.gui = true
+        v.vmx["memsize"] = "3072"
+        v.vmx["numvcpus"] = "2"
+    end
+
+    config.vm.provider :vmware_workstation do |v, override|
+        v.gui = true
+        v.vmx["memsize"] = "3072"
+        v.vmx["numvcpus"] = "2"
+    end
+end
